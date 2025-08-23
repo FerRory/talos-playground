@@ -1,0 +1,8 @@
+secrets/*
+
+*.auto.tfvars
+.terraform/
+.terraformrc
+*.tfstate*
+.terraform.lock.hcl
+images/*
