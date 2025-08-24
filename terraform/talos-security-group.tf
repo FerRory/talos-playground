@@ -4,7 +4,7 @@
 resource "azurerm_network_security_group" "talos_sg" {
   name                = "talos-sg"
   location            = var.location
-  resource_group_name = var.group_name
+  resource_group_name = azurerm_resource_group.main.name
 }
 
 # Client -> apid
@@ -18,7 +18,7 @@ resource "azurerm_network_security_rule" "apid" {
   destination_port_range      = "50000"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = var.group_name
+  resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.talos_sg.name
 }
 
@@ -33,7 +33,7 @@ resource "azurerm_network_security_rule" "trustd" {
   destination_port_range      = "50001"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = var.group_name
+  resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.talos_sg.name
 }
 
@@ -48,7 +48,7 @@ resource "azurerm_network_security_rule" "etcd" {
   destination_port_ranges     = ["2379", "2380"]
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = var.group_name
+  resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.talos_sg.name
 }
 
@@ -63,7 +63,7 @@ resource "azurerm_network_security_rule" "kube" {
   destination_port_range      = "6443"
   source_address_prefix       = "*"
   destination_address_prefix  = "*"
-  resource_group_name         = var.group_name
+  resource_group_name         = azurerm_resource_group.main.name
   network_security_group_name = azurerm_network_security_group.talos_sg.name
 }
 # NSG association

@@ -3,7 +3,7 @@ resource "azurerm_linux_virtual_machine" "talos_worker" {
   count               = 3
   name                = "talos-worker-big-${count.index}"
   location            = var.location
-  resource_group_name = var.group_name
+  resource_group_name = azurerm_resource_group.main.name
   size                = "Standard_D2s_v5"
 
   admin_username      = "talos"
@@ -11,10 +11,10 @@ resource "azurerm_linux_virtual_machine" "talos_worker" {
     azurerm_network_interface.worker_nic[count.index].id
   ]
 
-  source_image_id = data.azurerm_image.custom.id
+  source_image_id = azurerm_image.talos.id
 
   # Cloud-init / custom data (worker.yaml)
-  custom_data = filebase64("../worker.yaml")
+  custom_data = filebase64("../secrets/worker.yaml")
 
   os_disk {
     name                 = "talos-worker-big-${count.index}-osdisk"
@@ -32,7 +32,8 @@ resource "azurerm_linux_virtual_machine" "talos_worker" {
     storage_account_uri = "https://${var.storage_account}.blob.core.windows.net/"
   }
   depends_on = [
-    azurerm_storage_account.talos_sa
+    azurerm_storage_account.talos_sa,
+    azurerm_image.talos
   ]
 }
 
@@ -40,7 +41,7 @@ resource "azurerm_network_interface" "worker_nic" {
   count               = 3
   name                = "worker-nic-${count.index}"
   location            = var.location
-  resource_group_name = var.group_name
+  resource_group_name = azurerm_resource_group.main.name
 
   ip_configuration {
     name                          = "internal"
