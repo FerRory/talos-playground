@@ -15,3 +15,11 @@ customization:
 ## Terraform
 
 Terraform is working, only fails at image creation, after a retry it works. 
+
+
+## Prerequisites
+
+Create two directories: mkdir images secrets
+
+
+Download the image and unpack it in images/ directory with the name azure-amd64.vhd
