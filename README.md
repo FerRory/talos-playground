@@ -14,4 +14,4 @@ customization:
 
 ## Terraform
 
-Terraform part is still in progress.
+Terraform is working, only fails at image creation, after a retry it works. 
