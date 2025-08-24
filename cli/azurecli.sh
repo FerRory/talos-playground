@@ -40,7 +40,7 @@ export CONNECTION=$(az storage account show-connection-string \
   --overwrite \
   -n talos-azure.vhd     
 
-az image delete -n talos -g talos
+
 
  az image create \
   --name talos \
@@ -48,7 +48,7 @@ az image delete -n talos -g talos
   --os-type linux \
   -g $GROUP 
 
-
+az image delete -n talos -g talos
 # Create vnet
 az network vnet create \
   --resource-group $GROUP \
@@ -156,7 +156,7 @@ LB_PUBLIC_IP=$(az network public-ip show \
               --query "ipAddress" \
               --output tsv)
 
-#talosctl gen config talos-k8s-azure-tutorial https://${LB_PUBLIC_IP}:6443
+#talosctl gen config rory-azure-talos https://${LB_PUBLIC_IP}:6443
 
 # Create the control plane nodes
 # Create availability set
