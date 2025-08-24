@@ -6,3 +6,4 @@ secrets/*
 *.tfstate*
 .terraform.lock.hcl
 images/*
+.DS_Store
